@@ -1,5 +1,7 @@
 #include "camera.hpp"
 
+//Teste branch
+
 #include <glm/gtc/matrix_transform.hpp>
 
 void Camera::computeProjectionMatrix(glm::vec2 const &size) {
