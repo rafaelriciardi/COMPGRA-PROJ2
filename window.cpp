@@ -177,7 +177,9 @@ void Window::onPaint() {
 
   abcg::glBindVertexArray(m_VAO);
 
-  // Draw white bunny
+  // Draw square
+  // Teste
+  
   glm::mat4 model{1.0f};
   if(angle<360.0f) {
     angle = angle + 0.5f ;
