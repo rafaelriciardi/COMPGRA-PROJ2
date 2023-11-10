@@ -2,10 +2,10 @@
 
 void Ground::create(GLuint program) {
   // Unit quad on the xz plane
-  std::array<glm::vec3, 4> vertices{{{-0.25f, 0.0f, +0.25f},
-                                     {-0.25f, 0.0f, -0.25f},
-                                     {+0.25f, 0.0f, +0.25f},
-                                     {+0.25f, 0.0f, -0.25f}}};
+  std::array<glm::vec3, 8> vertices{{{-0.1f, 0.0f, +0.1f},
+                                     {-0.1f, 0.0f, -0.1f},
+                                     {+0.1f, 0.0f, +0.1f},
+                                     {+0.1f, 0.0f, -0.1f}}};
 
   // Generate VBO
   abcg::glGenBuffers(1, &m_VBO);
@@ -35,23 +35,28 @@ void Ground::paint() {
   abcg::glBindVertexArray(m_VAO);
 
   // Draw a grid of 2N+1 x 2N+1 tiles on the xz plane, centered around the origin
-  auto const N{30};
+  auto const N{50};
   for (auto const z : iter::range(-N, N + 1)) {
     for (auto const x : iter::range(-N, N + 1)) {
       // Calculate the height using a sine wave function
-      float amplitude = 0.5f;
-      float frequency = 0.5f;
+      float amplitude = 1.0f;
+      float frequency = 0.1f;
       float phase = 0.0f;
       float height = amplitude * std::sin(frequency * x + phase) * std::sin(frequency * z + phase);
-
+      height = std::round(height / 0.1f) * 0.1f;
       // Set model matrix as a translation matrix with the adjusted height
       glm::mat4 model{1.0f};
-      model = glm::translate(model, glm::vec3(x/2.0f, height, z/2.0f));
+      model = glm::translate(model, glm::vec3(x/5.0f, height, z/5.0f));
       abcg::glUniformMatrix4fv(m_modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
 
-      // Set color (checkerboard pattern)
-      auto const gray{(z + x) % 2 == 0 ? 1.0f : 0.5f};
-      abcg::glUniform4f(m_colorLoc, gray, gray, gray, 1.0f);
+      // Set color (checkerboard pattern
+      if(height < 0){
+        abcg::glUniform4f(m_colorLoc, 0.0f, 0.0f, 0.75f, 1.0f); 
+      }else if (height > 0.7) {
+        abcg::glUniform4f(m_colorLoc, 1.0f, 1.0f, 1.0f, 1.0f); 
+      } else {
+        abcg::glUniform4f(m_colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); 
+      }
       abcg::glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
   }
