@@ -12,37 +12,48 @@ template <> struct std::hash<Vertex> {
 
 void Window::onEvent(SDL_Event const &event) {
   if (event.type == SDL_KEYDOWN) {
-    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
+    if (event.key.keysym.sym == SDLK_w)
       m_dollySpeed = 2.0f;
-    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
+    if (event.key.keysym.sym == SDLK_s)
       m_dollySpeed = -2.0f;
-    if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
+    if (event.key.keysym.sym == SDLK_LEFT)
       m_panSpeed = -2.0f;
-    if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+    if (event.key.keysym.sym == SDLK_RIGHT)
       m_panSpeed = 2.0f;
-    if (event.key.keysym.sym == SDLK_q)
+    if (event.key.keysym.sym == SDLK_a)
       m_truckSpeed = -2.0f;
-    if (event.key.keysym.sym == SDLK_e)
+    if (event.key.keysym.sym == SDLK_d)
       m_truckSpeed = 2.0f;
+    if (event.key.keysym.sym == SDLK_DOWN)
+      m_cameraSpeed = -2.0f;
+    if (event.key.keysym.sym == SDLK_UP)
+      m_cameraSpeed = 2.0f;
+    if (event.key.keysym.sym == SDLK_LSHIFT)
+      m_flySpeed = 2.0f;
+    if (event.key.keysym.sym == SDLK_LCTRL)
+      m_flySpeed = -2.0f;
   }
   if (event.type == SDL_KEYUP) {
-    if ((event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) &&
-        m_dollySpeed > 0)
+    if (event.key.keysym.sym == SDLK_w && m_dollySpeed > 0)
       m_dollySpeed = 0.0f;
-    if ((event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) &&
-        m_dollySpeed < 0)
+    if (event.key.keysym.sym == SDLK_s && m_dollySpeed < 0)
       m_dollySpeed = 0.0f;
-    if ((event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) &&
-        m_panSpeed < 0)
+    if (event.key.keysym.sym == SDLK_LEFT && m_panSpeed < 0)
       m_panSpeed = 0.0f;
-    if ((event.key.keysym.sym == SDLK_RIGHT ||
-         event.key.keysym.sym == SDLK_d) &&
-        m_panSpeed > 0)
+    if (event.key.keysym.sym == SDLK_RIGHT && m_panSpeed > 0)
       m_panSpeed = 0.0f;
-    if (event.key.keysym.sym == SDLK_q && m_truckSpeed < 0)
+    if (event.key.keysym.sym == SDLK_a && m_truckSpeed < 0)
       m_truckSpeed = 0.0f;
-    if (event.key.keysym.sym == SDLK_e && m_truckSpeed > 0)
+    if (event.key.keysym.sym == SDLK_d && m_truckSpeed > 0)
       m_truckSpeed = 0.0f;
+    if (event.key.keysym.sym == SDLK_DOWN && m_cameraSpeed < 0)
+      m_cameraSpeed = 0.0f;
+    if (event.key.keysym.sym == SDLK_UP && m_cameraSpeed > 0)
+      m_cameraSpeed = 0.0f;
+    if (event.key.keysym.sym == SDLK_LSHIFT && m_flySpeed > 0)
+      m_flySpeed = 0.0f;
+    if (event.key.keysym.sym == SDLK_LCTRL && m_flySpeed < 0)
+      m_flySpeed = 0.0f;
   }
 }
 
@@ -224,6 +235,8 @@ void Window::onUpdate() {
   auto const deltaTime{gsl::narrow_cast<float>(getDeltaTime())};
 
   // Update LookAt camera
+  m_camera.cameraFlyView(m_cameraSpeed * deltaTime);
+  m_camera.fly(m_flySpeed * deltaTime);
   m_camera.dolly(m_dollySpeed * deltaTime);
   m_camera.truck(m_truckSpeed * deltaTime);
   m_camera.pan(m_panSpeed * deltaTime);

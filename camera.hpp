@@ -9,6 +9,8 @@ public:
   void computeViewMatrix();
   void computeProjectionMatrix(glm::vec2 const &size);
 
+  void cameraFlyView(float speed);
+  void fly(float speed);
   void dolly(float speed);
   void truck(float speed);
   void pan(float speed);
