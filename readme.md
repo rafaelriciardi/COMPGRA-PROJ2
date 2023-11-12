@@ -11,10 +11,11 @@ O projeto foi inspirado no "lookat", onde ele cria uma malha flat de triangulos 
 ## O Projeto:
 
 Quando estavamos experimentando algumas modificações para o cenário, chegamos a um resultado bem legal substituindo a malha flat do lookat padrão pela implementação de uma malha baseada na função senoide, o que remeteu muito bem a uma simulação montanhas e lagos, que inclusive aperfeiçoamos com cores e outros métodos explicados abaixo. 
+
 Ao ver o cenário gerado, nos lembramos prontamente do cenário gerado em Minecraft e assim, resolvemos implementar algumas funcionalidades de movimentação, como o "voar", muito utilizados no modo criativo desse jogo inspiração. Para melhorar a experiência, combinamos essa funcionalidade com novas implementações de movimentação de camera, para uma movimentação mais fluida.
 
 ## Definição do ambiente
-### ALTERAÇÕES GROUND.CPP:
+### Alterações em ground.cpp:
 
 EM "void Ground::create(GLuint program)" foi alterado os parametros para diminuir o tamanho dos quadrados da malha.
 ```
@@ -49,7 +50,7 @@ if(height < 0){
         abcg::glUniform4f(m_colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); 
       }
 ```
-### ALTERAÇÕES EM "onPaint":
+### Alterações em "onPaint":
 
 Em onPaint, foi alterado a criação das figuras, colocamos cubos para serem observados. E estes cubos em constante rotação no eixo X e Y.
 ```
@@ -70,6 +71,36 @@ if(angle<360.0f) {
 
 
 ## Definição da movimentação
-Para a movimentação, decidimos que 
+
+### Modo de voo
+Para implementar o modo de voo, foram atribuídas funções às teclas LSHIF (subir) e LCTRL (descer).
+```
+if (event.key.keysym.sym == SDLK_LSHIFT)
+  m_flySpeed = 2.0f;
+if (event.key.keysym.sym == SDLK_LCTRL)
+  m_flySpeed = -2.0f;
+```
+
+Assim como as outras funções, a função de voo é chamada da atualizada pela seguinte chamada:
+```
+m_camera.fly(m_flySpeed * deltaTime);
+```
+
+E seu funcionamento utiliza como base um vetor fixo (0,1,0) que quando multiplicado pela velocidade e somado às posições anteriores de posição da camera e lookat, realiza o deslocamento do espectador na posição horizontal.
+```
+void Camera::fly(float speed) {
+  // Instantiate height modifier vector
+  glm::vec3 height_modifier{0.0f, 1.0f, 0.0f};
+
+  // Move eye and lookat point based on height modifier and speed
+  m_eye += height_modifier * speed;
+  m_at += height_modifier * speed;
+
+  computeViewMatrix();
+}
+```
+
+
+Para melhorar a visualização no modo voo, também foram alteradas a distância de renderização e o fator de sombreamento de objetivos distantes.
 
 
