@@ -36,6 +36,8 @@ private:
   GLint m_colorLocation{};
 
   Camera m_camera;
+  float m_cameraSpeed{};
+  float m_flySpeed{};
   float m_dollySpeed{};
   float m_truckSpeed{};
   float m_panSpeed{};

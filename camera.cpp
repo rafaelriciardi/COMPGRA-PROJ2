@@ -14,6 +14,29 @@ void Camera::computeViewMatrix() {
   m_viewMatrix = glm::lookAt(m_eye, m_at, m_up);
 }
 
+void Camera::cameraFlyView(float speed) {
+  // Compute forward vector (view direction)
+
+  glm::vec3 view_modifier{0.0f, 1.0f, 0.0f};
+
+  // Move eye and center forward (speed > 0) or backward (speed < 0)
+  m_at += view_modifier * speed;
+
+  computeViewMatrix();
+}
+
+void Camera::fly(float speed) {
+  // Compute forward vector (view direction)
+
+  glm::vec3 height_modifier{0.0f, 1.0f, 0.0f};
+
+  // Move eye and center forward (speed > 0) or backward (speed < 0)
+  m_eye += height_modifier * speed;
+  m_at += height_modifier * speed;
+
+  computeViewMatrix();
+}
+
 void Camera::dolly(float speed) {
   // Compute forward vector (view direction)
   auto const forward{glm::normalize(m_at - m_eye)};
