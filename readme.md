@@ -15,6 +15,10 @@ Quando estavamos experimentando algumas modificações para o cenário, chegamos
 
 Ao ver o cenário gerado, nos lembramos prontamente do cenário gerado em Minecraft e assim, resolvemos implementar algumas funcionalidades de movimentação, como o "voar", muito utilizados no modo criativo desse jogo inspiração. Para melhorar a experiência, combinamos essa funcionalidade com novas implementações de movimentação de camera, para uma movimentação mais fluida.
 
+<p align="center">
+  <img src="https://github.com/Kevin-Sakaguti/COMPGRA-PROJ2/blob/main/imgs/montain_view.png"/>
+</p>
+
 ## Definição do ambiente
 ### Alterações em ground.cpp:
 
