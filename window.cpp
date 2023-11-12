@@ -189,8 +189,6 @@ void Window::onPaint() {
   abcg::glBindVertexArray(m_VAO);
 
   // Draw square
-  // Teste
-  // Teste 2
   
   
   if(angle<360.0f) {
