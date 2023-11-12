@@ -8,12 +8,17 @@ O programa é desenvolvido em C++, se trata de uma um mapa 3D que permite aos us
 
 O projeto foi inspirado no "lookat", onde ele cria uma malha flat de triangulos para simular um mapa e permite a navegação em X e Z. Além de visualização de objetos estáticos.
 
+Link para a aplicação: https://rafaelriciardi.github.io/abcg/
 
 ## O Projeto:
 
 Quando estavamos experimentando algumas modificações para o cenário, chegamos a um resultado bem legal substituindo a malha flat do lookat padrão pela implementação de uma malha baseada na função senoide, o que remeteu muito bem a uma simulação montanhas e lagos, que inclusive aperfeiçoamos com cores e outros métodos explicados abaixo. 
 
 Ao ver o cenário gerado, nos lembramos prontamente do cenário gerado em Minecraft e assim, resolvemos implementar algumas funcionalidades de movimentação, como o "voar", muito utilizados no modo criativo desse jogo inspiração. Para melhorar a experiência, combinamos essa funcionalidade com novas implementações de movimentação de camera, para uma movimentação mais fluida.
+
+<p align="center">
+  <img src="https://github.com/Kevin-Sakaguti/COMPGRA-PROJ2/blob/main/imgs/montain_view.png"/>
+</p>
 
 ## Definição do ambiente
 ### Alterações em ground.cpp:
