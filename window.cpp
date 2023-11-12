@@ -49,7 +49,7 @@ void Window::onEvent(SDL_Event const &event) {
 void Window::onCreate() {
   auto const &assetsPath{abcg::Application::getAssetsPath()};
 
-  abcg::glClearColor(0, 0, 0, 1);
+  abcg::glClearColor(0.53f, 0.81f, 0.98f, 1.0f);
 
   // Enable depth buffering
   abcg::glEnable(GL_DEPTH_TEST);
@@ -179,26 +179,34 @@ void Window::onPaint() {
 
   // Draw square
   // Teste
+  // Teste 2
   
-  glm::mat4 model{1.0f};
+  
   if(angle<360.0f) {
-    angle = angle + 0.5f ;
+    angle = angle + 15.0f ;
   } else {
     angle = 0;
   }
 
+  
+  glm::mat4 model{1.0f};
   model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
-  model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1, 0));
-  model = glm::scale(model, glm::vec3(1.0f));
-
+  model = glm::rotate(model, glm::radians(angle), glm::vec3(1, 1, 0));
+  model = glm::scale(model, glm::vec3(0.1f));
   abcg::glUniformMatrix4fv(m_modelMatrixLocation, 1, GL_FALSE, &model[0][0]);
-  abcg::glUniform4f(m_colorLocation, 0.5f, 0.0f, 0.0f, 1.0f);
-  abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT,
-                       nullptr);
+  abcg::glUniform4f(m_colorLocation, 0.5f, -1.0f, 0.0f, 1.0f);
+  abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT,nullptr);
 
+
+  // float amplitude = 1.0f;
+  // float frequency = 0.1f;
+  // float phase = 0.0f;
+  // float height = amplitude * std::sin(frequency * x + phase) * std::sin(frequency * z + phase);
+  // float height = amplitude * std::sin(frequency * x + phase) * std::sin(frequency * z + phase);
+
+  
+  
   abcg::glBindVertexArray(0);
-
-
 
   // Draw ground
   m_ground.paint();
