@@ -1,4 +1,5 @@
 Kevin Sakaguti Porto - 11039416
+
 Rafael Riciardi Barreira - 11056916
 
 # Seja bem vindo ao programa projeto2 -> "Montain View"
@@ -43,12 +44,14 @@ model = glm::translate(model, glm::vec3(x/5.0f, height, z/5.0f));
 Para dar o aspecto de montanha aplicamos a cor verde no nas alturas medianas acima de 0, para os picos da montanha aplicamos a cor branca e para os lagos a cor azul, ainda no "paint"
 ```
 if(height < 0){
-        abcg::glUniform4f(m_colorLoc, 0.0f, 0.0f, 0.75f, 1.0f); 
-      }else if (height > 0.7) {
-        abcg::glUniform4f(m_colorLoc, 1.0f, 1.0f, 1.0f, 1.0f); 
-      } else {
-        abcg::glUniform4f(m_colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); 
-      }
+  abcg::glUniform4f(m_colorLoc, 0.0f, 0.0f, 0.75f, 1.0f); 
+}
+else if (height > 0.7) {
+  abcg::glUniform4f(m_colorLoc, 1.0f, 1.0f, 1.0f, 1.0f); 
+}
+else {
+  abcg::glUniform4f(m_colorLoc, 0.0f, 1.0f, 0.0f, 1.0f);
+}
 ```
 ### Alterações em "onPaint":
 
@@ -103,4 +106,25 @@ void Camera::fly(float speed) {
 
 Para melhorar a visualização no modo voo, também foram alteradas a distância de renderização e o fator de sombreamento de objetivos distantes.
 
+### Rotação da câmera
+Para deixar a movimentação mais fluida para o usuário e proporcionar uma melhor experiência de interação, alteramos os comandos de **pan** para as setas esquerda e direita do teclado e atribuimos uma nova função às setas cima e baixo.
+```
+if (event.key.keysym.sym == SDLK_UP)
+  m_cameraSpeed = 2.0f;
+if (event.key.keysym.sym == SDLK_DOWN)
+  m_cameraSpeed = -2.0f;
+```
+
+Para que o jogador consigar olhar para cima e para baixo quando estiver voando, criamos essa nova função, que inclusive pode ser combinada na movimentação com as teclas wasd para voar de uma forma única pelo cenário.
+```
+void Camera::cameraFlyView(float speed) {
+// Instantiate view_modifier vector
+glm::vec3 view_modifier{0.0f, 1.0f, 0.0f};
+
+// Move de lookat point based on the modifier and speed
+m_at += view_modifier * speed;
+
+computeViewMatrix();
+}
+```
 
