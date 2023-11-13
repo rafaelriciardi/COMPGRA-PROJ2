@@ -9,6 +9,7 @@ O programa é desenvolvido em C++, se trata de uma um mapa 3D que permite aos us
 O projeto foi inspirado no "lookat", onde ele cria uma malha flat de triangulos para simular um mapa e permite a navegação em X e Z. Além de visualização de objetos estáticos.
 
 Link para a aplicação: https://rafaelriciardi.github.io/COMPGRA-PROJ2/
+Vídeo do projeto: https://youtu.be/iYVu-qPE0zU
 
 ## O Projeto:
 
