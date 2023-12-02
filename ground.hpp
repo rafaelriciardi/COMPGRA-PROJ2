@@ -9,6 +9,7 @@ public:
   void paint();
   void destroy();
   void generateMountainHeight(float x, float z);
+  void loadDiffuseTexture(std::string_view path);
 
 private:
   GLuint m_VAO{};
@@ -16,6 +17,8 @@ private:
 
   GLint m_modelMatrixLoc{};
   GLint m_colorLoc{};
+
+  GLuint m_diffuseTexture{};
 };
 
 #endif

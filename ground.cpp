@@ -1,4 +1,5 @@
 #include "ground.hpp"
+#include <filesystem>
 
 void Ground::create(GLuint program) {
   // Unit quad on the xz plane
@@ -68,4 +69,12 @@ void Ground::paint() {
 void Ground::destroy() {
   abcg::glDeleteBuffers(1, &m_VBO);
   abcg::glDeleteVertexArrays(1, &m_VAO);
+}
+
+void Ground::loadDiffuseTexture(std::string_view path) {
+  if (!std::filesystem::exists(path))
+    return;
+
+  abcg::glDeleteTextures(1, &m_diffuseTexture);
+  m_diffuseTexture = abcg::loadOpenGLTexture({.path = path});
 }
